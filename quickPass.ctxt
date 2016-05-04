@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=length\ strength
+comment0.target=void\ generatePass(int,\ double)
+comment1.params=difficulty
+comment1.target=char\ getChar(int)
+numComments=2
