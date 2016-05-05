@@ -1,0 +1,45 @@
+<html>
+<script>
+
+var chars=[[
+['1','2','3','4','5','6','7','8','9','0'],
+['q','w','e','r','t','y','u','i','o','p'],
+['a','s','d','f','g','h','j','k','l',';'],
+['z','x','c','v','b','n','m',',','.','/']
+],[
+['!','@','#','$','%','^','&','*','(',')'],
+['Q','W','E','R','T','Y','U','I','O','P'],
+['A','S','D','F','G','H','J','K','L',':'],
+['Z','X','C','V','B','N','M','<','>','?']
+]];
+
+//length: >=4
+//strength: 0-10?
+function genPass(len,str){
+	var password="";
+
+	for(var i=0;i<len-1;i++){
+		password+=genChar();
+	}
+	password+=genChar();
+
+	return password;
+}
+
+function genChar(lastDigit, shift){
+	var x=parseInt(Math.random()*10);
+	var y=parseInt(Math.random()*4);
+	var shifted=parseInt(Math.random()*2);
+	var character=chars[shifted][y][x];
+	return character;
+}
+
+//RULES:
+//do not generate a char that is typed by same finger as last char
+//do not generate a char typed by right pinky last (because true last key is enter, which uses this finger)
+//chars closest to the homerow are most efficient to type
+//capital chars <=[4] require right pinky, >=[5] left pinky, so key requiring this cannot come after, unless it just requires same shift key which does not add time
+//all passwords require 1 capChar[0], 1 capChar[1-3], 1 char[0]
+
+</script>
+</html>
