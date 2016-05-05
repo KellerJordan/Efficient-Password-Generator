@@ -28,18 +28,12 @@ function genPass(len,str){
 }
 
 function genChar(len, lastX){
-	if(len==0){
-		return "";
-	}
+	if(len==0){return "";}
 	var x=(Math.random()*10)|0;
 	var y=(Math.random()*4)|0;
-	var rand=(Math.pow(Math.random(),3)*2);
-	var shifted=rand|0;
+	var shifted=(Math.pow(Math.random(),3)*2)|0;
 	var character=chars[shifted][y][x];
-	if((x==lastX)  ||  (((lastX==3)||(lastX==5))&&x==lastX+1)  ||  (((lastX==3)||(lastX==5))&&x==lastX+1)){
-		character=genChar(1,lastX);
-	}
-	if(len==1&&x==9){
+	if((x==lastX)  ||  (((lastX==3)||(lastX==5))&&x==lastX+1)  ||  (((lastX==4)||(lastX==6))&&x==lastX-1)  ||  (len==1&&x==9)){
 		character=genChar(1,lastX);
 	}
 	return character+genChar(len-1,x);
