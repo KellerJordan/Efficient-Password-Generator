@@ -13,30 +13,18 @@ var chars=[[
 ['Z','X','C','V','B','N','M','<','>','?']
 ]];
 
-//length: >=4
-//strength: 0-10?
-function genPass(len,str){
-	var password="";
-
-	for(var i=0;i<len-1;i++){
-		character=getChar();
-		password+=character;
-	}
-	password+=genChar();
-
-	return password;
-}
-
-function genChar(len, lastX){
+function genPass(len, lastX){
 	if(len==0){return "";}
-	var x=(Math.random()*10)|0;
+	var rand=Math.random();
+	if(rand<.15){var x=0;}else if(rand<.4){x=1;}else if(rand<.65){x=2;}else if(rand<.85){x=3;}else{x=4;}
+	if(Math.random()>.5){x+=5;}
 	var y=(Math.random()*4)|0;
 	var shifted=(Math.pow(Math.random(),3)*2)|0;
 	var character=chars[shifted][y][x];
 	if((x==lastX)  ||  (((lastX==3)||(lastX==5))&&x==lastX+1)  ||  (((lastX==4)||(lastX==6))&&x==lastX-1)  ||  (len==1&&x==9)){
-		character=genChar(1,lastX);
+		character=genPass(1,lastX);
 	}
-	return character+genChar(len-1,x);
+	return character+genPass(len-1,x);
 }
 
 //RULES:
