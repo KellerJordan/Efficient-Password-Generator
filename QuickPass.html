@@ -19,25 +19,37 @@ function genPass(len,str){
 	var password="";
 
 	for(var i=0;i<len-1;i++){
-		password+=genChar();
+		character=getChar();
+		password+=character;
 	}
 	password+=genChar();
 
 	return password;
 }
 
-function genChar(lastDigit, shift){
-	var x=parseInt(Math.random()*10);
-	var y=parseInt(Math.random()*4);
-	var shifted=parseInt(Math.random()*2);
+function genChar(len, lastX){
+	if(len==0){
+		return "";
+	}
+	var x=(Math.random()*10)|0;
+	var y=(Math.random()*4)|0;
+	var rand=(Math.pow(Math.random(),3)*2);
+	var shifted=rand|0;
 	var character=chars[shifted][y][x];
-	return character;
+	if((x==lastX)  ||  (((lastX==3)||(lastX==5))&&x==lastX+1)  ||  (((lastX==3)||(lastX==5))&&x==lastX+1)){
+		character=genChar(1,lastX);
+	}
+	if(len==1&&x==9){
+		character=genChar(1,lastX);
+	}
+	return character+genChar(len-1,x);
 }
 
 //RULES:
-//do not generate a char that is typed by same finger as last char
-//do not generate a char typed by right pinky last (because true last key is enter, which uses this finger)
-//chars closest to the homerow are most efficient to type
+//no repeated use of fingers
+//last char is not typed by right pinky, because last key is technically enter
+//weight chars by finger strength, distance travelled by finger to reach
+
 //capital chars <=[4] require right pinky, >=[5] left pinky, so key requiring this cannot come after, unless it just requires same shift key which does not add time
 //all passwords require 1 capChar[0], 1 capChar[1-3], 1 char[0]
 
